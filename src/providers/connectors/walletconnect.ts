@@ -1,3 +1,5 @@
+import { isMobile } from "../../helpers/utils";
+
 export interface IWalletConnectConnectorOptions {
   infuraId: string;
   bridge?: string;
@@ -47,8 +49,12 @@ const ConnectToWalletConnect = (
     // Register onSessionCreated event if supported
     if (provider.onSessionCreated) {
       provider.onSessionCreated((wc: any) => {
+        const mobile = isMobile();
+
         // Try to redirect user if URI supported
-        window.location.href = wc.uri
+        if (mobile) {
+          window.location.href = wc.uri
+        }
       })
     }
 
