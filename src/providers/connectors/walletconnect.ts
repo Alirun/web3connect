@@ -44,6 +44,14 @@ const ConnectToWalletConnect = (
       chainId
     });
 
+    // Register onSessionCreated event if supported
+    if (provider.onSessionCreated) {
+      provider.onSessionCreated((wc: any) => {
+        // Try to redirect user if URI supported
+        window.location.href = wc.uri
+      })
+    }
+
     await provider.enable();
 
     resolve(provider);
